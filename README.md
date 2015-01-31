@@ -26,7 +26,7 @@ Your console should now look like this
 
     [1] Symfony-2.6.3 - app/dev/debug>
    
-Now call a application service:
+Now let's call doctrine and select a entity:
 
-    [1] Symfony-2.6.3 - app/dev/debug> $container->get('your_service_name');
+    [1] Symfony-2.6.3 - app/dev/debug> $container->get('doctrine')->getRepository('AcmeDemoBundle:Post')->find('1');
 
