@@ -37,10 +37,10 @@ class ConsoleCommand extends Command
         $boris = new Boris();
         $boris->setPrompt($this->getPrompt());
         $boris->setLocal(array(
-                'app' => $app,
-                'kernel' => $kernel,
-                'container' => $container,
-            ) + $this->getServices());
+            'app' => $app,
+            'kernel' => $kernel,
+            'container' => $container,
+        ));
 
         $boris->start();
     }
