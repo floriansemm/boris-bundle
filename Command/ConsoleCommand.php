@@ -7,9 +7,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Boris\Boris;
 
-
+/**
+ * Integrates REPL into symfony console
+ */
 class ConsoleCommand extends Command
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -18,6 +23,9 @@ class ConsoleCommand extends Command
             ->setDescription('Open boris REPL in application context');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $app = $this->getApplication();
@@ -27,45 +35,33 @@ class ConsoleCommand extends Command
         $app->setCatchExceptions(false);
 
         $boris = new Boris();
-
         $boris->setPrompt($this->getPrompt());
         $boris->setLocal(array(
-            'app' => $app,
-            'kernel' => $kernel,
-            'container' => $container
-        ) + $this->getServices());
+                'app' => $app,
+                'kernel' => $kernel,
+                'container' => $container,
+            ) + $this->getServices());
 
         $boris->start();
     }
 
-    private function getPrompt() {
-        return $this->getAppname() . '> ';
+    /**
+     * @return string
+     */
+    private function getPrompt()
+    {
+        return $this->getAppName() . '> ';
     }
 
-    private function getAppname() {
+    /**
+     * Name is application-name + application-version
+     *
+     * @return string
+     */
+    private function getAppName()
+    {
         $app = $this->getApplication();
+
         return $app->getName() . '-' . $app->getVersion();
-    }
-
-
-    private function getServiceNames() {
-        return array('doctrine');
-    }
-
-    private function getServices() {
-        $container = $this->getApplication()->getKernel()->getContainer();
-        $services  = array();
-
-        foreach ($this->getServiceNames() as $key => $name) {
-            if (is_numeric($key)) {
-                $key = $name;
-            }
-
-            if ($container->has($name)) {
-                $services[$key] = $container->get($name);
-            }
-        }
-
-        return $services;
     }
 }
