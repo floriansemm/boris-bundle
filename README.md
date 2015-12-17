@@ -21,7 +21,7 @@ Usage
 
 Initialize the interactive shell prompt
 
-    php app/console shell
+    php app/console repl
 
 Your console should now look like this
 
