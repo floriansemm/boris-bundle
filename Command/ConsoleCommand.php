@@ -18,8 +18,8 @@ class ConsoleCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('shell')
-            ->setAliases(array('console'))
+            ->setName('interactive')
+            ->setAliases(array('repl'))
             ->setDescription('Open boris REPL in application context');
     }
 
